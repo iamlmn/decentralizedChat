@@ -13,44 +13,49 @@ import java.net.InetSocketAddress;
 import java.time.Duration;
 
 public class GossipProtoApp {
-    private static final String KEY_HOST_NAME = "-hostname";
-    private static final String KEY_PORT = "-port";
     private static final Logger log = Logger.getLogger(GossipProtoApp.class);
 
     public static void main(String[] args) {
 
-        //Initialising Logger Configuration
-        initLogger(Integer.parseInt(args[3]));
+        // Boolean initialNodeBoolean;
 
         //Seed is used for starting initial communication
-        int seed = 0;
+        boolean initialNodeBoolean = true;
         
         //NodeGossiper handles maintaining membership, failure detection, sending/recieving chat messages
         NodeGossiper initialNodeGossiper;
         
-        if (args.length < 4 || !args[0].equals(KEY_HOST_NAME) || !args[2].equals(KEY_PORT)) {
-            System.out.println("Please make sure you pass the required arguments in below format\n" +
-                    "-hostname {hostname} -port {port-number} {seed}");
+        if (args.length < 2) {
+            System.out.println("Format is incorrect, please enter in following format.\n" +
+                    "{sourceHostname} {source-port-number} [targetHostName] [target port number]");
             System.exit(-1);
         }
-        String hostname = args[1];
-        int port = Integer.parseInt(args[3]);
-        if (args.length > 4){
-            seed = Integer.parseInt(args[4]);
+        String sourceHostName = args[0];
+        int sourcePort = Integer.parseInt(args[1]);
+
+        //Initialising Logger Configuration
+        initLogger(sourceHostName, sourcePort);
+
+        String targetHostName = "";
+        int targetPort=0;
+        if (args.length > 2){
+            initialNodeBoolean = false;
+            targetHostName = args[2];
+            targetPort = Integer.parseInt(args[3]);
         }        
+        
         //Get default gossip configurations
         GossipProperty gossipProperty = buildGossipProperty();
-        InetSocketAddress primaryNodeAddress = new InetSocketAddress(hostname, port);
+        InetSocketAddress primaryNodeAddress = new InetSocketAddress(sourceHostName, sourcePort);
 
-        if (seed == 0) {
-
+        if (initialNodeBoolean == true) {
             initialNodeGossiper = new NodeGossiper(primaryNodeAddress, gossipProperty);
 
         } else {
-            initialNodeGossiper = new NodeGossiper(primaryNodeAddress, new InetSocketAddress(hostname, seed), gossipProperty);
+            initialNodeGossiper = new NodeGossiper(primaryNodeAddress, new InetSocketAddress(targetHostName, targetPort), gossipProperty);
 
         }
-        System.out.println("Node Started- "+primaryNodeAddress.getAddress() +"::"+primaryNodeAddress.getPort());
+        System.out.println("Node Started at- "+primaryNodeAddress.getAddress() +"::"+primaryNodeAddress.getPort());
         initialNodeGossiper.start();
 
     }
@@ -66,18 +71,16 @@ public class GossipProtoApp {
     }
 
     //Configuring Logger for creating log files
-    public static void initLogger(int port) {
+    public static void initLogger(String hostname, int port) {
         Logger rootLogger = Logger.getRootLogger();
         rootLogger.setLevel(Level.ALL);
 
         //Define log pattern layout
         PatternLayout layout = new PatternLayout("%d{ISO8601} [%t] %-5p %c %x - %m%n");
 
-        //Adding console appender to root logger
-        // rootLogger.addAppender(new ConsoleAppender(layout));
         try {
             //Define file appender with layout and output log file name
-            RollingFileAppender fileAppender = new RollingFileAppender(layout, port + "_logs.log");
+            RollingFileAppender fileAppender = new RollingFileAppender(layout, hostname + port + "_logs.log");
 
             //Add the appender to root logger
             rootLogger.addAppender(fileAppender);

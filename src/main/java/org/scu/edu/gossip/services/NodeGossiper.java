@@ -22,8 +22,8 @@ public class NodeGossiper {
 
     private final GossipNode gossipNode;
     private final GossipProperty gossipProperty;
-    private final ConcurrentHashMap<String, GossipNode> clusterInfo; //stores all node which are online
-    private final MembershipService gossipNodeConnector;
+    private final ConcurrentHashMap<String, GossipNode> memberInfo; //stores all node which are online
+    private final MembershipService membersConnector;
     private final ChatMessageService commChannel;
     private final ConcurrentHashMap<String, Float> uid = new ConcurrentHashMap<>(); //uid stores uniqueID of message they recieved if they recieve same message again, the probabilty of forwarding the message is decreased
     private Boolean stopped = false;
@@ -36,10 +36,10 @@ public class NodeGossiper {
                         GossipProperty gossipProperty) {
         this.gossipProperty = gossipProperty;
         this.gossipNode = new GossipNode(nodeSocketAddress, 0, gossipProperty);
-        this.gossipNodeConnector = new MembershipService(nodeSocketAddress.getPort());
+        this.membersConnector = new MembershipService(nodeSocketAddress.getPort());
         this.commChannel = new ChatMessageService(nodeSocketAddress.getPort());
-        this.clusterInfo = new ConcurrentHashMap<>();
-        clusterInfo.putIfAbsent(gossipNode.getUniqueId(), gossipNode);
+        this.memberInfo = new ConcurrentHashMap<>();
+        memberInfo.putIfAbsent(gossipNode.getUniqueId(), gossipNode);
 
     }
 
@@ -48,7 +48,7 @@ public class NodeGossiper {
                         GossipProperty gossipProperty) {
         this(nodeSocketAddress, gossipProperty);
         GossipNode initialTargetNode = new GossipNode(targetSocketAddress, 0, gossipProperty);
-        clusterInfo.putIfAbsent(initialTargetNode.getUniqueId(), initialTargetNode);
+        memberInfo.putIfAbsent(initialTargetNode.getUniqueId(), initialTargetNode);
         this.gossipNode.addKnowNodes(initialTargetNode.getUniqueId(), initialTargetNode);
     }
 
@@ -58,7 +58,7 @@ public class NodeGossiper {
     public void start() {
         startSenderThread();
         startReceiverThread();
-        startFailureDetectionThread();
+        detectFailedNodesThread();
         startChatSender();
         startChatReceiver();
         startReplicationThread();
@@ -100,7 +100,6 @@ public class NodeGossiper {
         (new Thread() {
             @Override
             public void run() {
-
                 String uniqueID = UUID.randomUUID().toString();
                 uid.put(uniqueID, 1.00f);
                 ChatMessage<List<ChatMessage>> message = new ChatMessage<>(gossipNode, chatStorage, uniqueID, true);
@@ -177,9 +176,9 @@ public class NodeGossiper {
             public void run() {
                 List<String> targetNodeIds = fetchRandomNodes(gossipProperty.getPeerCount());
                 targetNodeIds.forEach((targetNodeId) -> {
-                    GossipNode targetNode = clusterInfo.get(targetNodeId);
+                    GossipNode targetNode = memberInfo.get(targetNodeId);
 
-                    if (clusterInfo.get(targetNodeId) != null) {
+                    if (memberInfo.get(targetNodeId) != null) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -278,23 +277,23 @@ public class NodeGossiper {
     private void sendGossipMessage() {
         gossipNode.incrementHeartbeat();
         List<String> targetNodeIds = fetchRandomNodes(gossipProperty.getPeerCount());
-        List<GossipNode> clusterNodes = new ArrayList<>(clusterInfo.values());
+        List<GossipNode> clusterNodes = new ArrayList<>(memberInfo.values());
         for (String targetNodeId : targetNodeIds) {
-            GossipNode targetNode = clusterInfo.get(targetNodeId);
+            GossipNode targetNode = memberInfo.get(targetNodeId);
 
-            if (clusterInfo.get(targetNodeId) != null) {
+            if (memberInfo.get(targetNodeId) != null) {
                 new Thread(() ->
-                        gossipNodeConnector.sendGossip(clusterNodes, targetNode.getSocketAddress()))
+                        membersConnector.sendGossip(clusterNodes, targetNode.getSocketAddress()))
                         .start();
             } else {
-                log.info("Node "+clusterInfo.get(targetNodeId)+" failed and is removed");
+                log.info("Node "+memberInfo.get(targetNodeId)+" failed and is removed");
             }
         }
     }
 
     // fetch random nodes from the cluster
     private List<String> fetchRandomNodes(int numberOfPeers) {
-        List<String> clusterNodes = new ArrayList<>(clusterInfo.keySet());
+        List<String> clusterNodes = new ArrayList<>(memberInfo.keySet());
 
         //Remove self from peer list
         clusterNodes.remove(gossipNode.getUniqueId());
@@ -317,8 +316,8 @@ public class NodeGossiper {
 
     //Receive gossip message
     private void receiveGossipMessage() {
-        List<GossipNode> receivedList = gossipNodeConnector.receiveGossip();
-        synchronized (clusterInfo) {
+        List<GossipNode> receivedList = membersConnector.receiveGossip();
+        synchronized (memberInfo) {
             updateMembers(receivedList);
         }
     }
@@ -327,69 +326,66 @@ public class NodeGossiper {
     public void updateMembers(List<GossipNode> receivedList) {
         for (GossipNode member : receivedList) {
             String id = member.getUniqueId();
-            synchronized(clusterInfo){
-            if (!clusterInfo.containsKey(id)) {
-                clusterInfo.put(id, member);
-                //member.setConfig(gossipProperty);
-                //member.setLastUpdatedTime();
+            synchronized(memberInfo){
+            if (!memberInfo.containsKey(id)) {
+                memberInfo.put(id, member);
                 if(member.getStatus() == 1 ){
                 System.out.println("Node Online: "+member.getPort());
                 }
-                clusterInfo.putIfAbsent(member.getUniqueId(), member);
+                memberInfo.putIfAbsent(member.getUniqueId(), member);
                 for (Map.Entry<String, GossipNode> n : member.getKnownNodes().entrySet()) {
-                    clusterInfo.putIfAbsent(n.getKey(), n.getValue());
+                    memberInfo.putIfAbsent(n.getKey(), n.getValue());
                 }
             } else {
-                GossipNode existingMemberRecord = clusterInfo.get(id);
+                GossipNode existingMemberRecord = memberInfo.get(id);
                 existingMemberRecord.update(member);
             }
         }
         }
     }
-
-    private void startFailureDetectionThread() {
+    // Starts detecting node failures
+    private void detectFailedNodesThread() {
         new Thread(() -> {
             while (!stopped) {
                 nodeFailureDetector();
-                synchronized (clusterInfo) {
+                synchronized (memberInfo) {
                     removeFailedNodes();
                 }
                 try {
                     Thread.sleep(gossipProperty.getDetectionInterval().toMillis());
                 } catch (InterruptedException ie) {
-                    log.error("Unable to start failure detection thread", ie);
+                    log.error("Failed to start failureDetectionThread", ie);
                 }
             }
         }).start();
     }
 
     ////Detect the failed node
-    void nodeFailureDetector() {
+    private void nodeFailureDetector() {
         LocalDateTime currentTimestamp = LocalDateTime.now();
-
-        for (String m : clusterInfo.keySet()) {
-            GossipNode member = clusterInfo.get(m);
+        for (String m : memberInfo.keySet()) {
+            GossipNode member = memberInfo.get(m);
             if (member.getStatus() == 1) {
                 LocalDateTime failureDetectionTime = member.timestamp.plus(gossipProperty.getFailureTimeout());
                 if (currentTimestamp.isAfter(failureDetectionTime)) {
                     member.setStatus(GossipNodeStatus.NODE_SUSPECT_DEAD);
-                    System.out.println("Node Offline: " + clusterInfo.get(m).getPort());
-                    log.info("Failed Node detected "+ clusterInfo.get(m));
+                    System.out.println("Node " + memberInfo.get(m).getPort() +  "is Offline");
+                    log.info("Detected a failed Node - "+ memberInfo.get(m));
                 }
             }
         }
     }
 
     //Removing nodes that are failed
-    void removeFailedNodes() {
+    private void removeFailedNodes() {
         LocalDateTime currentTimestamp = LocalDateTime.now();
-        for (String m : clusterInfo.keySet()) {
-            GossipNode member = clusterInfo.get(m);
-            if (member.getStatus() == 3) {
-                LocalDateTime failureDetectionTime = member.timestamp.plus(gossipProperty.getFailureTimeout());
+        for (String member : memberInfo.keySet()) {
+            GossipNode node = memberInfo.get(member);
+            if (node.getStatus() == 3) {
+                LocalDateTime failureDetectionTime = node.timestamp.plus(gossipProperty.getFailureTimeout());
                 if (currentTimestamp.isAfter(failureDetectionTime)) {
-                    log.info("Removing the failed node {} " + clusterInfo.get(m));
-                    clusterInfo.remove(m); // remove Failed members
+                    log.info("Removing node - {} " + memberInfo.get(member));
+                    memberInfo.remove(member); // remove Failed members
                 }
 
             }
@@ -409,11 +405,10 @@ public class NodeGossiper {
             } catch (InterruptedException e) {
                 log.error("Unable to get member info", e);
             }
-            synchronized (clusterInfo) {
+            synchronized (memberInfo) {
                 log.info("List of hosts");
-                clusterInfo.values().forEach(node ->
+                memberInfo.values().forEach(node ->
                         log.info( gossipNode.getUniqueId()+" -> "+node.status));
-
             }
         }).start();
     }

@@ -1,5 +1,4 @@
 package org.scu.edu.gossip.models;
-
 public enum GossipNodeStatus {
     NODE_ACTIVE(1),
     NODE_DEAD(2),
