@@ -71,7 +71,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/target/GossipProtoApp</outputDirectory>
+              <outputDirectory>${basedir}/target/GroupChat</outputDirectory>
               <resources>
                 <resource>
                   <directory>resources</directory>
@@ -93,7 +93,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/GossipProtoApp/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/GroupChat/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
@@ -109,14 +109,14 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>org.scu.edu.gossip.GossipProtoApp</mainClass>
+              <mainClass>org.scu.edu.gossip.GroupChat</mainClass>
             </manifest>
             <manifestEntries>
               <Class-Path>.</Class-Path>
             </manifestEntries>
           </archive>
 
-          <finalName>GossipProtoApp/GossipProtoApp</finalName>
+          <finalName>GroupChat/GroupChat</finalName>
         </configuration>
       </plugin>
     </plugins>

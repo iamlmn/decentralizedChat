@@ -1,0 +1,211 @@
+2022-03-06 19:51:24,971 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@58ccf951, org.scu.edu.gossip.models.GossipNode@95c87ec]
+2022-03-06 19:51:24,974 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved pullInfo from 53399 system time is 2022-03-06T19:51:24.971643
+2022-03-06 19:51:24,981 [Thread-7] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent [] to process /172.31.216.21:8081 system time is 2022-03-06T19:51:24.979766
+2022-03-06 19:51:24,999 [Thread-8] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:25,461 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@19a27490, org.scu.edu.gossip.models.GossipNode@32ea1f7f]
+2022-03-06 19:51:25,506 [Thread-9] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:25,965 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@144e6519, org.scu.edu.gossip.models.GossipNode@5de7885f]
+2022-03-06 19:51:26,010 [Thread-10] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:26,470 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@57eb6187, org.scu.edu.gossip.models.GossipNode@35988de2]
+2022-03-06 19:51:26,515 [Thread-11] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:26,974 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@529950e5, org.scu.edu.gossip.models.GossipNode@33dd9f99]
+2022-03-06 19:51:27,021 [Thread-12] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:27,195 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53401 system time is 2022-03-06T19:51:27.195701
+2022-03-06 19:51:27,483 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@2c9e524d, org.scu.edu.gossip.models.GossipNode@6752a941]
+2022-03-06 19:51:27,520 [Thread-14] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:27,712 [Thread-16] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:27.712072
+2022-03-06 19:51:27,984 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3d90e977, org.scu.edu.gossip.models.GossipNode@4f7a4725]
+2022-03-06 19:51:28,024 [Thread-17] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:28,227 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53403 system time is 2022-03-06T19:51:28.227849
+2022-03-06 19:51:28,489 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@49c4c3d0, org.scu.edu.gossip.models.GossipNode@3c689013]
+2022-03-06 19:51:28,529 [Thread-19] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:28,733 [Thread-18] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.5
+2022-03-06 19:51:28,735 [Thread-21] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:28.735932
+2022-03-06 19:51:28,994 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@6890db8, org.scu.edu.gossip.models.GossipNode@1b573123]
+2022-03-06 19:51:29,032 [Thread-22] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:29,247 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53405 system time is 2022-03-06T19:51:29.247441
+2022-03-06 19:51:29,493 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@7462abda, org.scu.edu.gossip.models.GossipNode@c72554d]
+2022-03-06 19:51:29,537 [Thread-24] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:29,753 [Thread-23] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.25
+2022-03-06 19:51:29,759 [Thread-26] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:29.759385
+2022-03-06 19:51:29,999 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@42587db6, org.scu.edu.gossip.models.GossipNode@602492f7]
+2022-03-06 19:51:30,039 [Thread-27] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:30,270 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53407 system time is 2022-03-06T19:51:30.270193
+2022-03-06 19:51:30,505 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@1f9d952, org.scu.edu.gossip.models.GossipNode@1fbf2c1d]
+2022-03-06 19:51:30,541 [Thread-29] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:30,775 [Thread-28] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.125
+2022-03-06 19:51:30,781 [Thread-31] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:30.781066
+2022-03-06 19:51:31,011 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@1e0b5791, org.scu.edu.gossip.models.GossipNode@5afccd8d]
+2022-03-06 19:51:31,045 [Thread-32] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:31,288 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53409 system time is 2022-03-06T19:51:31.288355
+2022-03-06 19:51:31,516 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@1580bcc9, org.scu.edu.gossip.models.GossipNode@73b9a5a0]
+2022-03-06 19:51:31,551 [Thread-34] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:31,794 [Thread-33] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.0625
+2022-03-06 19:51:31,798 [Thread-36] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:31.798227
+2022-03-06 19:51:32,017 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@374ad399, org.scu.edu.gossip.models.GossipNode@b66f058]
+2022-03-06 19:51:32,056 [Thread-37] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:32,311 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53411 system time is 2022-03-06T19:51:32.311118
+2022-03-06 19:51:32,525 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@448d985b, org.scu.edu.gossip.models.GossipNode@785554a2]
+2022-03-06 19:51:32,557 [Thread-39] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:32,817 [Thread-38] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.03125
+2022-03-06 19:51:32,822 [Thread-41] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:32.821931
+2022-03-06 19:51:33,025 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@60c5688a, org.scu.edu.gossip.models.GossipNode@170374dd]
+2022-03-06 19:51:33,063 [Thread-42] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:33,334 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved Het from 53413 system time is 2022-03-06T19:51:33.334829
+2022-03-06 19:51:33,526 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3fe46926, org.scu.edu.gossip.models.GossipNode@6d46da3c]
+2022-03-06 19:51:33,575 [Thread-44] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:33,840 [Thread-43] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: Het Probability changed to 0.015625
+2022-03-06 19:51:33,845 [Thread-46] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent Het to process /172.31.216.21:8081 system time is 2022-03-06T19:51:33.844985
+2022-03-06 19:51:34,031 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@268c6e26, org.scu.edu.gossip.models.GossipNode@2aa553b6]
+2022-03-06 19:51:34,073 [Thread-47] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:34,539 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3614b29d, org.scu.edu.gossip.models.GossipNode@6dd80959]
+2022-03-06 19:51:34,576 [Thread-48] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:35,040 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@2860b79a, org.scu.edu.gossip.models.GossipNode@28d879c3]
+2022-03-06 19:51:35,081 [Thread-49] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:35,543 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3b4ba61f, org.scu.edu.gossip.models.GossipNode@16f4f2ee]
+2022-03-06 19:51:35,586 [Thread-50] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:36,046 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3b854bcd, org.scu.edu.gossip.models.GossipNode@50782b1f]
+2022-03-06 19:51:36,092 [Thread-51] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:36,551 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@36650451, org.scu.edu.gossip.models.GossipNode@7b7e3f1]
+2022-03-06 19:51:36,597 [Thread-52] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:37,055 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@16fd0be9, org.scu.edu.gossip.models.GossipNode@74cfafa]
+2022-03-06 19:51:37,102 [Thread-53] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:37,560 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@191521ce, org.scu.edu.gossip.models.GossipNode@2185f176]
+2022-03-06 19:51:37,608 [Thread-54] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:38,065 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@5fd904ec, org.scu.edu.gossip.models.GossipNode@3fa2bec7]
+2022-03-06 19:51:38,113 [Thread-55] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:38,571 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@f89e3ac, org.scu.edu.gossip.models.GossipNode@109bd6a]
+2022-03-06 19:51:38,618 [Thread-56] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:39,073 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@166027c3, org.scu.edu.gossip.models.GossipNode@3c9ee74e]
+2022-03-06 19:51:39,124 [Thread-57] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:39,574 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@7ccaf7f2, org.scu.edu.gossip.models.GossipNode@3064e7ec]
+2022-03-06 19:51:39,629 [Thread-58] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:40,081 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@27ad901c, org.scu.edu.gossip.models.GossipNode@6cc2a730]
+2022-03-06 19:51:40,134 [Thread-59] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:40,582 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@471ca83d, org.scu.edu.gossip.models.GossipNode@50d07cb5]
+2022-03-06 19:51:40,640 [Thread-60] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:41,088 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@1bb63bc3, org.scu.edu.gossip.models.GossipNode@62b4f4a2]
+2022-03-06 19:51:41,145 [Thread-61] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:41,593 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@404be589, org.scu.edu.gossip.models.GossipNode@132d1ce1]
+2022-03-06 19:51:41,651 [Thread-62] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:42,098 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@396f4564, org.scu.edu.gossip.models.GossipNode@7cbba70f]
+2022-03-06 19:51:42,156 [Thread-63] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:42,604 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@634362bc, org.scu.edu.gossip.models.GossipNode@1872a021]
+2022-03-06 19:51:42,658 [Thread-64] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:43,110 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@5bf5822e, org.scu.edu.gossip.models.GossipNode@7ad7c580]
+2022-03-06 19:51:43,164 [Thread-65] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:43,613 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@2791ee4, org.scu.edu.gossip.models.GossipNode@f87d522]
+2022-03-06 19:51:43,669 [Thread-66] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:44,120 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@7814c20e, org.scu.edu.gossip.models.GossipNode@3c2bf349]
+2022-03-06 19:51:44,174 [Thread-67] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:44,626 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@76ef5416, org.scu.edu.gossip.models.GossipNode@47f0a12c]
+2022-03-06 19:51:44,679 [Thread-68] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:45,131 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@192a0f6e, org.scu.edu.gossip.models.GossipNode@7a7806b9]
+2022-03-06 19:51:45,185 [Thread-69] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:45,637 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@76bbb204, org.scu.edu.gossip.models.GossipNode@3400843e]
+2022-03-06 19:51:45,691 [Thread-70] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:46,143 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@7d18acaf, org.scu.edu.gossip.models.GossipNode@476f207b]
+2022-03-06 19:51:46,196 [Thread-71] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:46,647 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@6cef9100, org.scu.edu.gossip.models.GossipNode@5cfed9d7]
+2022-03-06 19:51:46,701 [Thread-72] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:47,148 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@643b6b33, org.scu.edu.gossip.models.GossipNode@5a69f337]
+2022-03-06 19:51:47,202 [Thread-73] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:47,653 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@4a9e0eeb, org.scu.edu.gossip.models.GossipNode@6084460e]
+2022-03-06 19:51:47,708 [Thread-74] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:48,155 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@5f59cbde, org.scu.edu.gossip.models.GossipNode@4abc7b49]
+2022-03-06 19:51:48,210 [Thread-75] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:48,661 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@706fcda3, org.scu.edu.gossip.models.GossipNode@32194196]
+2022-03-06 19:51:48,716 [Thread-76] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:49,158 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@238f6b30, org.scu.edu.gossip.models.GossipNode@a403a3b]
+2022-03-06 19:51:49,221 [Thread-77] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:49,666 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@44cfc05, org.scu.edu.gossip.models.GossipNode@7c2108eb, org.scu.edu.gossip.models.GossipNode@24af2ab4]
+2022-03-06 19:51:49,727 [Thread-78] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:49,727 [Thread-79] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:50,171 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@2fb54df8, org.scu.edu.gossip.models.GossipNode@4cfa30df, org.scu.edu.gossip.models.GossipNode@38681ffb]
+2022-03-06 19:51:50,172 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@654f68c8, org.scu.edu.gossip.models.GossipNode@60102314, org.scu.edu.gossip.models.GossipNode@7d719b01]
+2022-03-06 19:51:50,232 [Thread-80] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:50,232 [Thread-81] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:50,670 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@59ec493, org.scu.edu.gossip.models.GossipNode@1b09e5c0, org.scu.edu.gossip.models.GossipNode@7ae07d36]
+2022-03-06 19:51:50,675 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@bb848f8, org.scu.edu.gossip.models.GossipNode@78f1bf40, org.scu.edu.gossip.models.GossipNode@2c02727b]
+2022-03-06 19:51:50,736 [Thread-83] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:50,736 [Thread-82] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:51,154 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53417 system time is 2022-03-06T19:51:51.154331
+2022-03-06 19:51:51,175 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@5572a300, org.scu.edu.gossip.models.GossipNode@1cc4cede, org.scu.edu.gossip.models.GossipNode@693a69b9]
+2022-03-06 19:51:51,176 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@56145f4f, org.scu.edu.gossip.models.GossipNode@163e8c2e, org.scu.edu.gossip.models.GossipNode@2c361209]
+2022-03-06 19:51:51,237 [Thread-85] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:51,237 [Thread-86] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:51,663 [Thread-89] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8082 system time is 2022-03-06T19:51:51.663637
+2022-03-06 19:51:51,666 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53419 system time is 2022-03-06T19:51:51.666054
+2022-03-06 19:51:51,663 [Thread-88] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:51.663767
+2022-03-06 19:51:51,679 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@16fbc197, org.scu.edu.gossip.models.GossipNode@62611a20, org.scu.edu.gossip.models.GossipNode@5ca5be]
+2022-03-06 19:51:51,680 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@1c6649e6, org.scu.edu.gossip.models.GossipNode@54d9c484, org.scu.edu.gossip.models.GossipNode@3e836425]
+2022-03-06 19:51:51,739 [Thread-92] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:51,739 [Thread-91] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:52,172 [Thread-90] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.5
+2022-03-06 19:51:52,177 [Thread-94] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:52.177790
+2022-03-06 19:51:52,178 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53424 system time is 2022-03-06T19:51:52.178661
+2022-03-06 19:51:52,179 [Thread-95] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8082 system time is 2022-03-06T19:51:52.178969
+2022-03-06 19:51:52,183 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@5b97571e, org.scu.edu.gossip.models.GossipNode@75901cf3, org.scu.edu.gossip.models.GossipNode@6ff71b21]
+2022-03-06 19:51:52,186 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@4af0f8b6, org.scu.edu.gossip.models.GossipNode@2bbe6951, org.scu.edu.gossip.models.GossipNode@5ebc8f51]
+2022-03-06 19:51:52,189 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53427 system time is 2022-03-06T19:51:52.189487
+2022-03-06 19:51:52,190 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53429 system time is 2022-03-06T19:51:52.190587
+2022-03-06 19:51:52,244 [Thread-99] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:52,244 [Thread-100] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:52,686 [Thread-96] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.25
+2022-03-06 19:51:52,690 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@945a9b4, org.scu.edu.gossip.models.GossipNode@443dd562, org.scu.edu.gossip.models.GossipNode@1c91c855]
+2022-03-06 19:51:52,692 [Thread-102] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:52.692299
+2022-03-06 19:51:52,692 [Thread-103] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8082 system time is 2022-03-06T19:51:52.692737
+2022-03-06 19:51:52,694 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53432 system time is 2022-03-06T19:51:52.694316
+2022-03-06 19:51:52,694 [Thread-97] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.125
+2022-03-06 19:51:52,695 [Thread-98] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.0625
+2022-03-06 19:51:52,697 [Thread-106] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:52.697155
+2022-03-06 19:51:52,697 [Thread-107] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8082 system time is 2022-03-06T19:51:52.697158
+2022-03-06 19:51:52,698 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53435 system time is 2022-03-06T19:51:52.698576
+2022-03-06 19:51:52,699 [Thread-109] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:52.699437
+2022-03-06 19:51:52,699 [Thread-110] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8082 system time is 2022-03-06T19:51:52.699716
+2022-03-06 19:51:52,700 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53440 system time is 2022-03-06T19:51:52.700784
+2022-03-06 19:51:52,750 [Thread-114] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8082]
+2022-03-06 19:51:52,750 [Thread-113] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:53,191 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@266d0a91, org.scu.edu.gossip.models.GossipNode@2410fe1, org.scu.edu.gossip.models.GossipNode@287d5c0e]
+2022-03-06 19:51:53,200 [Thread-111] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.015625
+2022-03-06 19:51:53,200 [Thread-104] INFO  org.scu.edu.gossip.services.NodeGossiper  - Forwarding Message: fadsad Probability changed to 0.03125
+2022-03-06 19:51:53,203 [Thread-117] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:53.203293
+2022-03-06 19:51:53,205 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53444 system time is 2022-03-06T19:51:53.205832
+2022-03-06 19:51:53,207 [Thread-118] INFO  org.scu.edu.gossip.services.ChatMessageService  - Sent fadsad to process /172.31.216.21:8081 system time is 2022-03-06T19:51:53.207110
+2022-03-06 19:51:53,207 [Thread-120] ERROR org.scu.edu.gossip.services.ChatMessageService  - Unable to send message
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:579)
+	at java.base/sun.nio.ch.Net.connect(Net.java:568)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:588)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/java.net.Socket.connect(Socket.java:583)
+	at java.base/java.net.Socket.<init>(Socket.java:507)
+	at java.base/java.net.Socket.<init>(Socket.java:319)
+	at org.scu.edu.gossip.services.ChatMessageService.sendMessage(ChatMessageService.java:32)
+	at org.scu.edu.gossip.services.NodeGossiper$5$1.run(NodeGossiper.java:183)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-03-06 19:51:53,207 [Thread-4] INFO  org.scu.edu.gossip.services.ChatMessageService  - Recieved fadsad from 53446 system time is 2022-03-06T19:51:53.207418
+2022-03-06 19:51:53,246 [Thread-2] INFO  org.scu.edu.gossip.services.NodeGossiper  - Detected a failed Node - org.scu.edu.gossip.models.GossipNode@24af2ab4
+2022-03-06 19:51:53,246 [Thread-2] INFO  org.scu.edu.gossip.services.NodeGossiper  - Removing node - {} org.scu.edu.gossip.models.GossipNode@24af2ab4
+2022-03-06 19:51:53,254 [Thread-123] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:53,698 [Thread-1] INFO  org.scu.edu.gossip.services.MembershipService  - Received a gossip message [org.scu.edu.gossip.models.GossipNode@3a3cfa34, org.scu.edu.gossip.models.GossipNode@744b4660]
+2022-03-06 19:51:53,760 [Thread-124] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:54,204 [Thread-119] ERROR org.scu.edu.gossip.services.ChatMessageService  - Unable to send message
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:579)
+	at java.base/sun.nio.ch.Net.connect(Net.java:568)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:588)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/java.net.Socket.connect(Socket.java:583)
+	at java.base/java.net.Socket.<init>(Socket.java:507)
+	at java.base/java.net.Socket.<init>(Socket.java:319)
+	at org.scu.edu.gossip.services.ChatMessageService.sendMessage(ChatMessageService.java:32)
+	at org.scu.edu.gossip.services.NodeGossiper$5$1.run(NodeGossiper.java:183)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-03-06 19:51:54,265 [Thread-125] INFO  org.scu.edu.gossip.services.MembershipService  - Sending gossip message to [/172.31.216.21:8081]
+2022-03-06 19:51:54,756 [Thread-2] INFO  org.scu.edu.gossip.services.NodeGossiper  - Detected a failed Node - org.scu.edu.gossip.models.GossipNode@95c87ec
+2022-03-06 19:51:54,756 [Thread-2] INFO  org.scu.edu.gossip.services.NodeGossiper  - Removing node - {} org.scu.edu.gossip.models.GossipNode@95c87ec

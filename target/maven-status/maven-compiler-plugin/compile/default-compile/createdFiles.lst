@@ -1,7 +1,6 @@
 org/scu/edu/gossip/models/ChatMessage.class
 org/scu/edu/gossip/services/NodeGossiper$4.class
 org/scu/edu/gossip/services/NodeGossiper$5.class
-org/scu/edu/gossip/GossipProtoApp.class
 org/scu/edu/gossip/configs/GossipProperty.class
 org/scu/edu/gossip/models/GossipNode.class
 org/scu/edu/gossip/services/NodeGossiper$5$1.class
@@ -10,6 +9,7 @@ org/scu/edu/gossip/services/ChatMessageService.class
 org/scu/edu/gossip/models/GossipNodeStatus.class
 org/scu/edu/gossip/services/NodeGossiper$6.class
 org/scu/edu/gossip/services/NodeGossiper$3.class
+org/scu/edu/gossip/GroupChat.class
 org/scu/edu/gossip/services/NodeGossiper.class
 org/scu/edu/gossip/services/NodeGossiper$7.class
 org/scu/edu/gossip/services/NodeGossiper$2.class

@@ -1,6 +1,4 @@
 package org.scu.edu.gossip.services;
-
-
 import org.scu.edu.gossip.configs.GossipProperty;
 import org.scu.edu.gossip.models.ChatMessage;
 import org.scu.edu.gossip.models.GossipNode;
@@ -25,7 +23,7 @@ public class NodeGossiper {
     private final ConcurrentHashMap<String, GossipNode> memberInfo; //stores all node which are online
     private final MembershipService membersConnector;
     private final ChatMessageService commChannel;
-    private final ConcurrentHashMap<String, Float> uid = new ConcurrentHashMap<>(); //uid stores uniqueID of message they recieved if they recieve same message again, the probabilty of forwarding the message is decreased
+    private final ConcurrentHashMap<String, Float> messageIndentifier = new ConcurrentHashMap<>(); //uid stores uniqueID of message they recieved if they recieve same message again, the probabilty of forwarding the message is decreased
     private Boolean stopped = false;
     private List<ChatMessage> chatStorage = new ArrayList<>();
 
@@ -90,7 +88,7 @@ public class NodeGossiper {
     public void sendDBSyncMessage() {
         final String msg = "pullInfo";
         String uniqueID = UUID.randomUUID().toString();
-        uid.put(uniqueID, 1.00f);
+        messageIndentifier.put(uniqueID, 1.00f);
         ChatMessage<String> message = new ChatMessage<>(gossipNode, msg, uniqueID, false);
         gossipChatMessage(message);
     }
@@ -101,7 +99,7 @@ public class NodeGossiper {
             @Override
             public void run() {
                 String uniqueID = UUID.randomUUID().toString();
-                uid.put(uniqueID, 1.00f);
+                messageIndentifier.put(uniqueID, 1.00f);
                 ChatMessage<List<ChatMessage>> message = new ChatMessage<>(gossipNode, chatStorage, uniqueID, true);
                 commChannel.sendMessage(msg.getSender(), message);
             }
@@ -116,13 +114,13 @@ public class NodeGossiper {
             List<ChatMessage> newStorage = msg.getMessage();
                 
                 for (ChatMessage data : newStorage) {
-                    synchronized(uid){
+                    synchronized(messageIndentifier){
        
-                        if (uid.containsKey(data.getUUID())){
+                        if (messageIndentifier.containsKey(data.getUUID())){
                             log.info("Message already added");
                         } else {
                             
-                            uid.putIfAbsent(data.getUUID(), 1f);
+                            messageIndentifier.putIfAbsent(data.getUUID(), 1f);
                             System.out.println("Recieved Message from "+data.getSender().getPort()+": "+ data.getMessage());
                             log.info("Adding message {"+data.getMessage()+ " From "+ data.getSender().getPort()+"} in chatStorage");
                             chatStorage.add(data);
@@ -153,7 +151,7 @@ public class NodeGossiper {
                 while ((input = stdIn.readLine()) != null) {
                     final String msg = input;
                     String uniqueID = UUID.randomUUID().toString();
-                    uid.put(uniqueID, 1.00f);
+                    messageIndentifier.put(uniqueID, 1.00f);
                     
                     ChatMessage<String> message = new ChatMessage<>(gossipNode, msg, uniqueID, false);
                     if (!chatStorage.contains(message) && !"pullInfo".equals(input)) {
@@ -233,18 +231,18 @@ public class NodeGossiper {
             @Override
             public synchronized void run() {
                 try {
-                    if (uid.containsKey(message.getUUID())) {
-                        float probability = uid.get(message.getUUID());
+                    if (messageIndentifier.containsKey(message.getUUID())) {
+                        float probability = messageIndentifier.get(message.getUUID());
                         probability /= 2;
                         if (probability >= (1 / 64f)) {
-                            uid.replace(message.getUUID(), probability);
+                            messageIndentifier.replace(message.getUUID(), probability);
                             Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
                             log.info("Forwarding Message: "+ message.getMessage() +" Probability changed to "+probability);
                             gossipChatMessage(message);
                         }
 
                     } else {
-                        uid.put(message.getUUID(), 1.00f);
+                        messageIndentifier.put(message.getUUID(), 1.00f);
                         chatStorage.add(message);
                         System.out.println("Recieved Message from "+message.getSender().getPort()+": "+message.getMessage());
                         Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());

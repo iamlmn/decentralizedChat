@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.time.Duration;
 
-public class GossipProtoApp {
-    private static final Logger log = Logger.getLogger(GossipProtoApp.class);
+public class GroupChat {
+    private static final Logger log = Logger.getLogger(GroupChat.class);
 
     public static void main(String[] args) {
 
