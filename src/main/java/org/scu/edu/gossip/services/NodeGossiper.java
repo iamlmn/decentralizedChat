@@ -23,11 +23,11 @@ public class NodeGossiper {
     private final GossipNode gossipNode;
     private final GossipProperty gossipProperty;
     private final ConcurrentHashMap<String, GossipNode> clusterInfo; //stores all node which are online
-    private final MembershipService gossipNodeConnector;
-    private final ChatMessageService commChannel;
-    private final ConcurrentHashMap<String, Float> uid = new ConcurrentHashMap<>(); //uid stores uniqueID of message they recieved if they recieve same message again, the probabilty of forwarding the message is decreased
+    private final MembershipService connector;
+    private final ChatMessageService chatConnector;
+    private final ConcurrentHashMap<String, Float> chatMsgId = new ConcurrentHashMap<>(); //chatMsgId stores uniqueID of message they recieved if they recieve same message again, the probabilty of forwarding the message is decreased
     private Boolean stopped = false;
-    private List<ChatMessage> chatStorage = new ArrayList<>();
+    private List<ChatMessage> chatRepository = new ArrayList<>();
 
     Thread sender;
 
@@ -36,8 +36,8 @@ public class NodeGossiper {
                         GossipProperty gossipProperty) {
         this.gossipProperty = gossipProperty;
         this.gossipNode = new GossipNode(nodeSocketAddress, 0, gossipProperty);
-        this.gossipNodeConnector = new MembershipService(nodeSocketAddress.getPort());
-        this.commChannel = new ChatMessageService(nodeSocketAddress.getPort());
+        this.connector = new MembershipService(nodeSocketAddress.getPort());
+        this.chatConnector = new ChatMessageService(nodeSocketAddress.getPort());
         this.clusterInfo = new ConcurrentHashMap<>();
         clusterInfo.putIfAbsent(gossipNode.getUniqueId(), gossipNode);
 
@@ -52,64 +52,42 @@ public class NodeGossiper {
         this.gossipNode.addKnowNodes(initialTargetNode.getUniqueId(), initialTargetNode);
     }
 
-    /**
-     * Start node gossip process
-     */
+    //Start the Gossip Node
     public void start() {
         startSenderThread();
         startReceiverThread();
         startFailureDetectionThread();
-        startChatSender();
-        startChatReceiver();
+        startChatSenderThread();
+        startChatReceiverThread();
         startReplicationThread();
         //getMemberInfo();
     }
 
-    //Message Sync between nodes
-    public void startReplicationThread() {
-        (new Thread() {
-
-            @Override
-            public void run() {
-
-                {
-                    sendDBSyncMessage();
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        log.error(e);
-                    }
-                }
-                
-            }
-
-
-        }).start();
-    }
+    
     //Sends pull request when node start, to get all the message he didn't recieve
     public void sendDBSyncMessage() {
         final String msg = "pullInfo";
         String uniqueID = UUID.randomUUID().toString();
-        uid.put(uniqueID, 1.00f);
+        chatMsgId.put(uniqueID, 1.00f);
         ChatMessage<String> message = new ChatMessage<>(gossipNode, msg, uniqueID, false);
         gossipChatMessage(message);
     }
     
-    //Sends chatStorage to node which requested pullinfo
+    //Sends chatRepository to node which requested pullinfo
     public void sendDBInfo(ChatMessage<String> msg) {
         (new Thread() {
             @Override
             public void run() {
 
                 String uniqueID = UUID.randomUUID().toString();
-                uid.put(uniqueID, 1.00f);
-                ChatMessage<List<ChatMessage>> message = new ChatMessage<>(gossipNode, chatStorage, uniqueID, true);
-                commChannel.sendMessage(msg.getSender(), message);
+                chatMsgId.put(uniqueID, 1.00f);
+                ChatMessage<List<ChatMessage>> message = new ChatMessage<>(gossipNode, chatRepository, uniqueID, true);
+                chatConnector.sendMessage(msg.getSender(), message);
             }
         }).start();
     }
 
-    //Merges chatStorage with recieved chatStorage
+    //Merges chatRepository with recieved chatRepository
     public void mergeDBInfo(ChatMessage<List<ChatMessage>> msg) {
        (new Thread() {
             @Override
@@ -117,16 +95,16 @@ public class NodeGossiper {
             List<ChatMessage> newStorage = msg.getMessage();
                 
                 for (ChatMessage data : newStorage) {
-                    synchronized(uid){
+                    synchronized(chatMsgId){
        
-                        if (uid.containsKey(data.getUUID())){
+                        if (chatMsgId.containsKey(data.getUUID())){
                             log.info("Message already added");
                         } else {
                             
-                            uid.putIfAbsent(data.getUUID(), 1f);
+                            chatMsgId.putIfAbsent(data.getUUID(), 1f);
                             System.out.println("Recieved Message from "+data.getSender().getPort()+": "+ data.getMessage());
-                            log.info("Adding message {"+data.getMessage()+ " From "+ data.getSender().getPort()+"} in chatStorage");
-                            chatStorage.add(data);
+                            log.info("Adding message {"+data.getMessage()+ " From "+ data.getSender().getPort()+"} in chatRepository");
+                            chatRepository.add(data);
                         }
                         }
                     }
@@ -136,7 +114,7 @@ public class NodeGossiper {
 
 
     //Chat message service
-    public void startChatSender() {
+    public void startChatSenderThread() {
         (new Thread() {
             @Override
             public void run() {
@@ -149,18 +127,18 @@ public class NodeGossiper {
         try {
 
             System.out.println("Give input message ");
-            try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+            try (BufferedReader sysInput = new BufferedReader(new InputStreamReader(System.in))) {
                 String input;
-                while ((input = stdIn.readLine()) != null) {
+                while ((input = sysInput.readLine()) != null) {
                     final String msg = input;
-                    String uniqueID = UUID.randomUUID().toString();
-                    uid.put(uniqueID, 1.00f);
+                    String uniqueChatMsgID = UUID.randomUUID().toString();
+                    chatMsgId.put(uniqueChatMsgID, 1.00f);
                     
-                    ChatMessage<String> message = new ChatMessage<>(gossipNode, msg, uniqueID, false);
-                    if (!chatStorage.contains(message) && !"pullInfo".equals(input)) {
-                        synchronized (chatStorage) {
-                            log.info("Adding message {"+input+ " From "+gossipNode.getPort()+"} in chatStorage");
-                            chatStorage.add(message);
+                    ChatMessage<String> message = new ChatMessage<>(gossipNode, msg, uniqueChatMsgID, false);
+                    if (!chatRepository.contains(message) && !"pullInfo".equals(input)) {
+                        synchronized (chatRepository) {
+                            log.info("Adding message {"+input+ " From "+gossipNode.getPort()+"} in chatRepository");
+                            chatRepository.add(message);
                         }
                     }
                     gossipChatMessage(message);
@@ -175,15 +153,15 @@ public class NodeGossiper {
         (new Thread() {
             @Override
             public void run() {
-                List<String> targetNodeIds = fetchRandomNodes(gossipProperty.getPeerCount());
-                targetNodeIds.forEach((targetNodeId) -> {
-                    GossipNode targetNode = clusterInfo.get(targetNodeId);
+                List<String> randomMemberNodeIds = getRandomNodes(gossipProperty.getPeerCount());
+                randomMemberNodeIds.forEach((randomMemberNodeId) -> {
+                    GossipNode randomTargetNode = clusterInfo.get(randomMemberNodeId);
 
-                    if (clusterInfo.get(targetNodeId) != null) {
+                    if (clusterInfo.get(randomMemberNodeId) != null) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                commChannel.sendMessage(targetNode, message);
+                                chatConnector.sendMessage(randomTargetNode, message);
                             }
                         })
                                 .start();
@@ -196,17 +174,17 @@ public class NodeGossiper {
         }).start();
     }
 
-    public void startChatReceiver() {
+    public void startChatReceiverThread() {
         (new Thread() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         //Accepting Request
-                        final Socket s = commChannel.getServerSocket().accept();
-                        ChatMessage message = commChannel.receiveMessage(s);
+                        final Socket s = chatConnector.getServerSocket().accept();
+                        ChatMessage message = chatConnector.receiveMessage(s);
                                 String mergingData = "True";
-                                //Merging chatStorage if message contains DBinfo
+                                //Merging chatRepository if message contains DBinfo
                                 if (message.containsDBinfo() ) {
                                     mergeDBInfo(message);
                                 } else {
@@ -234,19 +212,19 @@ public class NodeGossiper {
             @Override
             public synchronized void run() {
                 try {
-                    if (uid.containsKey(message.getUUID())) {
-                        float probability = uid.get(message.getUUID());
+                    if (chatMsgId.containsKey(message.getUUID())) {
+                        float probability = chatMsgId.get(message.getUUID());
                         probability /= 2;
                         if (probability >= (1 / 64f)) {
-                            uid.replace(message.getUUID(), probability);
+                            chatMsgId.replace(message.getUUID(), probability);
                             Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
                             log.info("Forwarding Message: "+ message.getMessage() +" Probability changed to "+probability);
                             gossipChatMessage(message);
                         }
 
                     } else {
-                        uid.put(message.getUUID(), 1.00f);
-                        chatStorage.add(message);
+                        chatMsgId.put(message.getUUID(), 1.00f);
+                        chatRepository.add(message);
                         System.out.println("Recieved Message from "+message.getSender().getPort()+": "+message.getMessage());
                         Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
                         gossipChatMessage(message);
@@ -259,7 +237,8 @@ public class NodeGossiper {
         }).start();
 
     }
-
+    
+    //Start sending known nodes to randaomly selected nodes
     private void startSenderThread() {
         sender = new Thread(() -> {
             while (!stopped) {
@@ -267,33 +246,33 @@ public class NodeGossiper {
                 try {
                     Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
                 } catch (InterruptedException e) {
-                    log.error("Unable to start gossip sender thread", e);
+                    log.error("Memebership Sender Thread Failed", e);
                 }
             }
         });
         sender.start();
     }
 
-    //Send gossip to peers to maintain membership list
+    //Gossip the membership list to the peers
     private void sendGossipMessage() {
         gossipNode.incrementHeartbeat();
-        List<String> targetNodeIds = fetchRandomNodes(gossipProperty.getPeerCount());
-        List<GossipNode> clusterNodes = new ArrayList<>(clusterInfo.values());
-        for (String targetNodeId : targetNodeIds) {
-            GossipNode targetNode = clusterInfo.get(targetNodeId);
+        List<String> randomMemberNodeIds = getRandomNodes(gossipProperty.getPeerCount());
+        List<GossipNode> memeberNodes = new ArrayList<>(clusterInfo.values());
+        for (String randomMemberNodeId : randomMemberNodeIds) {
+            GossipNode randomTargetNode = clusterInfo.get(randomMemberNodeId);
 
-            if (clusterInfo.get(targetNodeId) != null) {
+            if (clusterInfo.get(randomMemberNodeId) != null) {
                 new Thread(() ->
-                        gossipNodeConnector.sendGossip(clusterNodes, targetNode.getSocketAddress()))
+                        connector.sendGossip(memeberNodes, randomTargetNode.getSocketAddress()))
                         .start();
             } else {
-                log.info("Node "+clusterInfo.get(targetNodeId)+" failed and is removed");
+                log.info("Node "+clusterInfo.get(randomMemberNodeId)+" failed and is removed");
             }
         }
     }
 
     // fetch random nodes from the cluster
-    private List<String> fetchRandomNodes(int numberOfPeers) {
+    private List<String> getRandomNodes(int numberOfPeers) {
         List<String> clusterNodes = new ArrayList<>(clusterInfo.keySet());
 
         //Remove self from peer list
@@ -317,7 +296,7 @@ public class NodeGossiper {
 
     //Receive gossip message
     private void receiveGossipMessage() {
-        List<GossipNode> receivedList = gossipNodeConnector.receiveGossip();
+        List<GossipNode> receivedList = connector.receiveGossip();
         synchronized (clusterInfo) {
             updateMembers(receivedList);
         }
@@ -400,22 +379,44 @@ public class NodeGossiper {
         stopped = true;
     }
 
-    public void getMemberInfo() {
+    //Message Sync between nodes
+    public void startReplicationThread() {
+        (new Thread() {
 
-        new Thread(() ->
-        {
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                log.error("Unable to get member info", e);
-            }
-            synchronized (clusterInfo) {
-                log.info("List of hosts");
-                clusterInfo.values().forEach(node ->
-                        log.info( gossipNode.getUniqueId()+" -> "+node.status));
+            @Override
+            public void run() {
 
+                {
+                    sendDBSyncMessage();
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        log.error(e);
+                    }
+                }
+                
             }
+
+
         }).start();
     }
+
+    // public void getMemberInfo() {
+
+    //     new Thread(() ->
+    //     {
+    //         try {
+    //             Thread.sleep(30);
+    //         } catch (InterruptedException e) {
+    //             log.error("Unable to get member info", e);
+    //         }
+    //         synchronized (clusterInfo) {
+    //             log.info("List of hosts");
+    //             clusterInfo.values().forEach(node ->
+    //                     log.info( gossipNode.getUniqueId()+" -> "+node.status));
+
+    //         }
+    //     }).start();
+    // }
 
 }
