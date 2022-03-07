@@ -1,7 +1,9 @@
 package org.gossip.services;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.gossip.models.GossipNode;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,7 +16,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.log4j.Logger;
+
 
 public class MembershipService {
     private static final Logger log = Logger.getLogger(MembershipService.class);

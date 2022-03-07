@@ -1,7 +1,9 @@
 package org.gossip.services;
+
 import org.gossip.models.ChatMessage;
 import org.gossip.models.GossipNode;
 import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

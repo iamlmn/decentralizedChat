@@ -18,8 +18,8 @@ public class GroupChat {
 
     //Configuring Logger for creating log files
     public static void initLogger(String hostname, int port) {
-        Logger rootLogger = Logger.getRootLogger();
-        rootLogger.setLevel(Level.ALL);
+        Logger rootLoggerHanlder = Logger.getRootLogger();
+        rootLoggerHanlder.setLevel(Level.ALL);
 
         //Define log pattern layout
         PatternLayout patternLayout = new PatternLayout("%d{ISO8601} [%t] %-5p %c %x - %m%n");
@@ -29,7 +29,7 @@ public class GroupChat {
             RollingFileAppender fileAppenderHandler = new RollingFileAppender(patternLayout, hostname + port + "_logs.log");
 
             //Add the appender to root logger
-            rootLogger.addAppender(fileAppenderHandler);
+            rootLoggerHanlder.addAppender(fileAppenderHandler);
         } catch (IOException e) {
             System.out.println("Failed to add appender !!");
         }
@@ -50,6 +50,11 @@ public class GroupChat {
             System.exit(-1);
         }
         String sourceHostName = args[0];
+        if (validateIPv4(sourceHostName) == false) {
+            System.out.println("Return invalid IP address");
+            System.exit(-1);
+        }
+
         int sourcePort = Integer.parseInt(args[1]);
 
         //Initialising Logger Configuration
@@ -60,6 +65,11 @@ public class GroupChat {
         if (args.length > 2){
             initialNodeBoolean = false;
             targetHostName = args[2];
+            if (validateIPv4(targetHostName) == false) {
+            System.out.println("Return invalid target IP address");
+            System.exit(-1);
+            }
+        
             targetPort = Integer.parseInt(args[3]);
         }        
         
@@ -68,19 +78,29 @@ public class GroupChat {
 
         // Create source socket
         InetSocketAddress primaryNodeAddress = new InetSocketAddress(sourceHostName, sourcePort);
-
-        if (initialNodeBoolean == true) {
-            initialNodeGossiper = new NodeGossiper(primaryNodeAddress, gossipProperty);
-
-        } else {
-            initialNodeGossiper = new NodeGossiper(primaryNodeAddress, new InetSocketAddress(targetHostName, targetPort), gossipProperty);
-
-        }
+        initialNodeGossiper = (initialNodeBoolean == true) ? new NodeGossiper(primaryNodeAddress, gossipProperty) : new NodeGossiper(primaryNodeAddress, new InetSocketAddress(targetHostName, targetPort), gossipProperty);
         System.out.println("Node Started at- "+primaryNodeAddress.getAddress() +"::"+primaryNodeAddress.getPort());
         initialNodeGossiper.startGossip();
 
     }
 
+    public static boolean validateIPv4(String IP) {
+        String[] nums = IP.split("\\.", -1);
+        for (String x : nums) {
+        // Validate integer in range (0, 255):
+        // 1. length of chunk is between 1 and 3
+        if (x.length() == 0 || x.length() > 3) return false;
+        // 2. no extra leading zeros
+        if (x.charAt(0) == '0' && x.length() != 1) return false;
+        // 3. only digits are allowed
+        for (char ch : x.toCharArray()) {
+            if (! Character.isDigit(ch)) return false;
+        }
+        // 4. less than 255
+        if (Integer.parseInt(x) > 255) return false;
+        }
+        return true;
+  }
     private static GossipProperty setDefaultGossipProperty() {
         return new GossipProperty(
                 Duration.ofSeconds(1), // failure timeout
