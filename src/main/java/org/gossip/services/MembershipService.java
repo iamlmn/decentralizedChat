@@ -6,7 +6,6 @@ import org.gossip.models.GossipNode;
 import org.gossip.configs.GossipProperty;
 import org.gossip.models.ChatMessage;
 import org.gossip.services.GossipUtils;
-// import org.gossip.models.GossipNode;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,7 +18,6 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.util.Arrays;
-// import java.util.List;
 import java.util.*;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +29,7 @@ public class MembershipService {
     private DatagramSocket datagramSocket;
     private GossipUtils utils = new GossipUtils();
     private final byte[] receivedBuffer = new byte[8192];
-    private final DatagramPacket receivePacket =
+    private final DatagramPacket packetReceiver =
             new DatagramPacket(receivedBuffer, receivedBuffer.length);
 
     public MembershipService(int portToListen) {
@@ -62,57 +60,26 @@ public class MembershipService {
     }
 
 
-    // //Receive gossip message
-    // private void receiveGossipMessage(membersConnector, memberInfo) {
-    //     List<GossipNode> receivedList = membersConnector.receiveGossip();
-    //     synchronized (memberInfo) {
-    //         updateMembers(receivedList, memberInfo);
-    //     }
-    // }
-
-    // //Update the Current Members with new Nodes
-    // public void updateMembers(List<GossipNode> receivedList) {
-    //     for (GossipNode member : receivedList) {
-    //         String id = member.getUniqueId();
-    //         synchronized(memberInfo){
-    //         if (!memberInfo.containsKey(id)) {
-    //             memberInfo.put(id, member);
-    //             if(member.getStatus() == 1 ){
-    //             System.out.println("Node Online: "+member.getPort());
-    //             }
-    //             memberInfo.putIfAbsent(member.getUniqueId(), member);
-    //             for (Map.Entry<String, GossipNode> n : member.getKnownNodes().entrySet()) {
-    //                 memberInfo.putIfAbsent(n.getKey(), n.getValue());
-    //             }
-    //         } else {
-    //             GossipNode existingMemberRecord = memberInfo.get(id);
-    //             existingMemberRecord.update(member);
-    //         }
-    //     }
-    //     }
-    // }
-
-
     public List<GossipNode> receiveGossip() {
-        List<GossipNode> message = null;
+        List<GossipNode> gossipMessage = null;
         try {
-            datagramSocket.receive(receivePacket);
+            datagramSocket.receive(packetReceiver);
 
             try (ObjectInputStream objectInputStream = new ObjectInputStream(
-                    new ByteArrayInputStream(receivePacket.getData()))) {
+                    new ByteArrayInputStream(packetReceiver.getData()))) {
 
-                message = (List<GossipNode>) objectInputStream.readObject();
-                log.info("Received a gossip message "+message);
+                gossipMessage = (List<GossipNode>) objectInputStream.readObject();
+                log.info("Received a gossip message " + gossipMessage);
 
             } catch (ClassNotFoundException e) {
-                log.error("Error in receiving message", e);
+                log.error("An error has occured while receiving message", e);
             }
 
         } catch (IOException e) {
-            log.error("Unable to receive message", e);
+            log.error("Failed to receive message", e);
         }
 
-        return message;
+        return gossipMessage;
     }
 
     public void sendGossip(List<GossipNode> memberList, InetSocketAddress receiver) {

@@ -112,12 +112,12 @@ public class ChatMessageService {
 
     }
 
-    public ChatMessage receiveMessage(Socket s) {
+    public ChatMessage receiveMessage(Socket socket) {
         try
         {
-            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-            ChatMessage message = (ChatMessage)in.readObject();
-            log.info("Recieved "+message.getMessage()+" from " +s.getPort()+ " system time is "+LocalDateTime.now());
+            ObjectInputStream inputStrean = new ObjectInputStream(socket.getInputStream());
+            ChatMessage message = (ChatMessage)inputStrean.readObject();
+            log.info("Recieved "+message.getMessage()+" from " +socket.getPort()+ " system time is "+LocalDateTime.now());
             return message;
 
         }

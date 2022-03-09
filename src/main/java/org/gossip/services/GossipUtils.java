@@ -39,23 +39,23 @@ public class GossipUtils {
     }
 
 
-    //Update the Current Members with new Nodes
-    public void updateMembers(List<GossipNode> receivedList, ConcurrentHashMap<String, GossipNode> memberInfo) {
-        for (GossipNode member : receivedList) {
-            String id = member.getUniqueId();
+    // a function that updates the current members with new nodes
+    public void updateMembers(List<GossipNode> receivedNodeList, ConcurrentHashMap<String, GossipNode> memberInfo) {
+        for (GossipNode node : receivedNodeList) {
+            String id = node.getUniqueId();
             synchronized(memberInfo){
             if (!memberInfo.containsKey(id)) {
-                memberInfo.put(id, member);
-                if(member.getStatus() == 1 ){
-                System.out.println("Node Online: "+ randomNameGenerator.getUserName(member.getPort()) + '(' + member.getPort() + ')');
+                memberInfo.put(id, node);
+                if(node.getStatus() == 1 ){
+                System.out.println("Node Online: "+ randomNameGenerator.getUserName(node.getPort()) + '(' + node.getPort() + ')');
                 }
-                memberInfo.putIfAbsent(member.getUniqueId(), member);
-                for (Map.Entry<String, GossipNode> n : member.getKnownNodes().entrySet()) {
+                memberInfo.putIfAbsent(node.getUniqueId(), node);
+                for (Map.Entry<String, GossipNode> n : node.getKnownNodes().entrySet()) {
                     memberInfo.putIfAbsent(n.getKey(), n.getValue());
                 }
             } else {
-                GossipNode existingMemberRecord = memberInfo.get(id);
-                existingMemberRecord.update(member);
+                GossipNode currentMemberRecord = memberInfo.get(id);
+                currentMemberRecord.update(node);
             }
         }
         }

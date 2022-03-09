@@ -46,7 +46,6 @@ public class NodeGossiper {
         this.chatConnector = new ChatMessageService(nodeSocketAddress.getPort());
         this.memberInfo = new ConcurrentHashMap<>();
         memberInfo.putIfAbsent(gossipNode.getUniqueId(), gossipNode);
-
     }
 
     public NodeGossiper(InetSocketAddress nodeSocketAddress,
@@ -144,7 +143,7 @@ public class NodeGossiper {
 
 
     /*******************************************
-     *   5.Start recieving Chat Message  helper  *
+     *   5.Start recieving Chat Message  helper *
      *******************************************/
 
     public void initiateChatReceiverThread() {
@@ -154,22 +153,22 @@ public class NodeGossiper {
                 while (true) {
                     try {
                         //Accepting Request
-                        final Socket s = chatConnector.getServerSocket().accept();
-                        ChatMessage message = chatConnector.receiveMessage(s);
+                        final Socket socket = chatConnector.getServerSocket().accept();
+                        ChatMessage chatMessage = chatConnector.receiveMessage(socket);
                                 String mergingData = "True";
-                                //Merging chatRepository if message contains DBinfo
-                                if (!message.containsDBinfo() ) {
-                                    String req = (String) message.getMessage();
+                                // if message contains DBinfo then merge the chatstorage
+                                if (!chatMessage.containsDBinfo() ) {
+                                    String req = (String) chatMessage.getMessage();
                                     if (req.equals("#pulldata")) {
-                                        chatConnector.sendChatHistory(message, messageIndentifier, gossipNode, chatRepository);
+                                        chatConnector.sendChatHistory(chatMessage, messageIndentifier, gossipNode, chatRepository);
                                     } else {
-                                        // Create a new thread for each recieve message and applying exponential backoff to control network congestion
-                                        runExponentialBackOff(message);
+                                        // for each message received a new thread would be created and to control network congestion exponential backoff would be implemented.
+                                        runExponentialBackOff(chatMessage);
                                     }
                                     
                                 } else {
                                     // update Chat repositoey.
-                                    utils.updateChatRepository(message, messageIndentifier, chatRepository);
+                                    utils.updateChatRepository(chatMessage, messageIndentifier, chatRepository);
                                 }
                             
                     } catch (IOException ex) {
@@ -181,27 +180,27 @@ public class NodeGossiper {
     }
     
     // stops gossiping same message after its probability decreases by 1/64
-    private void runExponentialBackOff(ChatMessage<String> message) {
+    private void runExponentialBackOff(ChatMessage<String> chat) {
         (new Thread() {
             @Override
             public synchronized void run() {
                 try {
-                    if (messageIndentifier.containsKey(message.getUUID())) {
-                        float probability = messageIndentifier.get(message.getUUID());
+                    if (messageIndentifier.containsKey(chat.getUUID())) {
+                        float probability = messageIndentifier.get(chat.getUUID());
                         probability /= 2;
                         if (probability >= (1 / 64f)) {
-                            messageIndentifier.replace(message.getUUID(), probability);
+                            messageIndentifier.replace(chat.getUUID(), probability);
                             Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
-                            log.info("Forwarding Message: "+ message.getMessage() +" Probability changed to "+probability);
-                            chatConnector.gossipChatMessage(message, memberInfo, gossipProperty, gossipNode);
+                            log.info("Forwarding Message: "+ chat.getMessage() +" Probability changed to "+probability);
+                            chatConnector.gossipChatMessage(chat, memberInfo, gossipProperty, gossipNode);
                         }
 
                     } else {
-                        messageIndentifier.put(message.getUUID(), 1.00f);
-                        chatRepository.add(message);
-                        System.out.println("Recieved Message from " + message.getSender().getPort() + ": " + message.getMessage());
+                        messageIndentifier.put(chat.getUUID(), 1.00f);
+                        chatRepository.add(chat);
+                        System.out.println("Recieved Message from " + chat.getSender().getPort() + ": " + chat.getMessage());
                         Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
-                        chatConnector.gossipChatMessage(message, memberInfo, gossipProperty, gossipNode);
+                        chatConnector.gossipChatMessage(chat, memberInfo, gossipProperty, gossipNode);
                     }
 
                 } catch (InterruptedException ex) {
