@@ -4,6 +4,7 @@ import org.gossip.configs.GossipProperty;
 import org.gossip.models.ChatMessage;
 import org.gossip.models.GossipNode;
 import org.gossip.models.GossipNodeStatus;
+import org.gossip.services.RandomNameGenerator;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -20,6 +21,7 @@ public class FailureDetector {
 
     // constrcutor
     private static final Logger log = Logger.getLogger(FailureDetector.class);
+    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
     /*******************************************
      *      Failure detection methods          *
@@ -34,7 +36,7 @@ public class FailureDetector {
                 LocalDateTime failureDetectionTime = node.timestamp.plus(gossipProperty.getFailureTimeout());
                 if (currentTimestamp.isAfter(failureDetectionTime)) {
                     node.setStatus(GossipNodeStatus.NODE_SUSPECT_DEAD);
-                    System.out.println("Node " + memberInfo.get(member).getPort() +  " is Offline");
+                    System.out.println("Node " + RandomNameGenerator.getUserName(memberInfo.get(member).getPort()) + '(' + memberInfo.get(member).getPort() +  ") is Offline");
                     log.info("Detected a failed Node - "+ memberInfo.get(member));
                 }
             }

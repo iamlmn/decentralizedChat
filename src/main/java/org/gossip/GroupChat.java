@@ -7,6 +7,7 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.RollingFileAppender;
 import org.gossip.configs.GossipProperty;
 import org.gossip.services.NodeGossiper;
+import org.gossip.services.RandomNameGenerator;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -15,18 +16,21 @@ import java.time.Duration;
 public class GroupChat {
 
     private static final Logger log = Logger.getLogger(GroupChat.class);
+    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
     //Configuring Logger for creating log files
     public static void initLogger(String hostname, int port) {
         Logger rootLoggerHanlder = Logger.getRootLogger();
         rootLoggerHanlder.setLevel(Level.ALL);
+        String uname = "";
+        uname = RandomNameGenerator.getUserName(port);
 
         //Define log pattern layout
         PatternLayout patternLayout = new PatternLayout("%d{ISO8601} [%t] %-5p %c %x - %m%n");
 
         try {
             // Define file appender with layout and output log file name
-            RollingFileAppender fileAppenderHandler = new RollingFileAppender(patternLayout, hostname + port + "_logs.log");
+            RollingFileAppender fileAppenderHandler = new RollingFileAppender(patternLayout, uname + port + "_logs.log");
 
             //Add the appender to root logger
             rootLoggerHanlder.addAppender(fileAppenderHandler);
@@ -78,7 +82,7 @@ public class GroupChat {
         // Create source socket
         InetSocketAddress primaryNodeAddress = new InetSocketAddress(sourceHostName, sourcePort);
         initialNodeGossiper = (initialNodeBoolean == true) ? new NodeGossiper(primaryNodeAddress, gossipProperty) : new NodeGossiper(primaryNodeAddress, new InetSocketAddress(targetHostName, targetPort), gossipProperty);
-        System.out.println("Node Started at- "+primaryNodeAddress.getAddress() +"::"+primaryNodeAddress.getPort());
+        System.out.println("Node " + RandomNameGenerator.getUserName(primaryNodeAddress.getPort()) + " Started at- "+primaryNodeAddress.getAddress() +"::"+primaryNodeAddress.getPort());
         initialNodeGossiper.startGossip();
 
     }
