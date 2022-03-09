@@ -62,16 +62,20 @@ public class GossipNode implements Serializable {
 
     public void update(GossipNode newInfo) {
         if (newInfo.timestamp.isBefore(this.timestamp) ||
-                newInfo.timestamp.isEqual(this.timestamp))
+                newInfo.timestamp.isEqual(this.timestamp)) {
             return;
+        }
 
-        if (newInfo.heartbeat <= this.heartbeat)
+        else if (newInfo.heartbeat <= this.heartbeat) {
             return;
+        }
+        else{
+            this.timestamp = LocalDateTime.now();
+            this.heartbeat = newInfo.heartbeat;
 
-        this.timestamp = LocalDateTime.now();
-        this.heartbeat = newInfo.heartbeat;
+            this.setStatus(NODE_ACTIVE);
+        }
 
-        this.setStatus(NODE_ACTIVE);
     }
     
     public ConcurrentHashMap<String, GossipNode> getKnownNodes(){
