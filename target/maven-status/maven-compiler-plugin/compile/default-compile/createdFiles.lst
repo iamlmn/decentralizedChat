@@ -1,8 +1,11 @@
+org/gossip/services/GossipUtils.class
 org/gossip/services/NodeGossiper$2.class
 org/gossip/services/NodeGossiper$7.class
 org/gossip/models/GossipNode.class
 org/gossip/services/NodeGossiper$3.class
+org/gossip/services/runBackOffAlgorithm.class
 org/gossip/GroupChat.class
+org/gossip/services/FailureDetector.class
 org/gossip/configs/GossipProperty.class
 org/gossip/services/MembershipService.class
 org/gossip/models/ChatMessage.class

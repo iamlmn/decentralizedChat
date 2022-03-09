@@ -45,13 +45,13 @@ public class GroupChat {
         NodeGossiper initialNodeGossiper;
         
         if (args.length < 2) {
-            System.out.println("Format is incorrect, please enter in following format.\n" +
+            System.out.println("Input format is incorrect, please enter in following format.\n" +
                     "{sourceHostname} {source-port-number} [targetHostName] [target port number]");
             System.exit(-1);
         }
         String sourceHostName = args[0];
         if (validateIPv4(sourceHostName) == false) {
-            System.out.println("Return invalid IP address");
+            System.out.println("Invalid source IP address");
             System.exit(-1);
         }
 
@@ -66,10 +66,9 @@ public class GroupChat {
             initialNodeBoolean = false;
             targetHostName = args[2];
             if (validateIPv4(targetHostName) == false) {
-            System.out.println("Return invalid target IP address");
-            System.exit(-1);
-            }
-        
+                System.out.println("Invalid target IP address");
+                System.exit(-1);
+                }
             targetPort = Integer.parseInt(args[3]);
         }        
         

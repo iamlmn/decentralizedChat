@@ -1,10 +1,12 @@
 package org.gossip.models;
+
 import static org.gossip.models.GossipNodeStatus.NODE_ACTIVE;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.gossip.configs.GossipProperty;
 
 public class GossipNode implements Serializable {
