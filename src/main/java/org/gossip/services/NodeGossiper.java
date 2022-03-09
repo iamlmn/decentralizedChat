@@ -157,7 +157,7 @@ public class NodeGossiper {
                         ChatMessage chatMessage = chatConnector.receiveMessage(socket);
                                 String mergingData = "True";
                                 // if message contains DBinfo then merge the chatstorage
-                                if (!chatMessage.containsDBinfo() ) {
+                                if (!chatMessage.isUpdateRequestSet() ) {
                                     String req = (String) chatMessage.getMessage();
                                     if (req.equals("#pulldata")) {
                                         chatConnector.sendChatHistory(chatMessage, messageIndentifier, gossipNode, chatRepository);
@@ -193,6 +193,9 @@ public class NodeGossiper {
                             Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
                             log.info("Forwarding Message: "+ chat.getMessage() +" Probability changed to "+probability);
                             chatConnector.gossipChatMessage(chat, memberInfo, gossipProperty, gossipNode);
+                        }
+                        else {
+                            log.info("Ending  gossiping message: "+ chat.getMessage() + " as Probability is "+ probability + "(< 1/64f)");
                         }
 
                     } else {

@@ -7,14 +7,14 @@ public class ChatMessage<T> implements Serializable
 {
     private T message;
     private final String uuid;
-    private boolean hasDBInfo;
+    private boolean updateRequest;
     private GossipNode sender;
    
-    public ChatMessage(GossipNode sender, T message, String id, boolean hasDBInfo)
+    public ChatMessage(GossipNode sender, T message, String id, boolean updateRequest)
     {
         this.message = message;
         this.uuid = id;
-        this.hasDBInfo = hasDBInfo;
+        this.updateRequest = updateRequest;
         this.sender = sender;
     }
 
@@ -23,9 +23,9 @@ public class ChatMessage<T> implements Serializable
         return uuid;
     }
 
-    public boolean containsDBinfo()
+    public boolean isUpdateRequestSet()
     {
-        return this.hasDBInfo;
+        return this.updateRequest;
     }
 
     public T getMessage()

@@ -22,15 +22,15 @@ public class GroupChat {
     public static void initLogger(String hostname, int port) {
         Logger rootLoggerHanlder = Logger.getRootLogger();
         rootLoggerHanlder.setLevel(Level.ALL);
-        String uname = "";
-        uname = RandomNameGenerator.getUserName(port);
+        // String uname = "";
+        // uname = 
 
         //Define log pattern layout
         PatternLayout patternLayout = new PatternLayout("%d{ISO8601} [%t] %-5p %c %x - %m%n");
 
         try {
             // Define file appender with layout and output log file name
-            RollingFileAppender fileAppenderHandler = new RollingFileAppender(patternLayout, uname + port + "_logs.log");
+            RollingFileAppender fileAppenderHandler = new RollingFileAppender(patternLayout, hostname + port + "_logs.log");
 
             //Add the appender to root logger
             rootLoggerHanlder.addAppender(fileAppenderHandler);
