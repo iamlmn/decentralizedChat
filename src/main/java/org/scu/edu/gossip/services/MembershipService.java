@@ -22,7 +22,7 @@ public class MembershipService {
 
     private DatagramSocket datagramSocket;
     private final byte[] receivedBuffer = new byte[8192];
-    private final DatagramPacket receivePacket =
+    private final DatagramPacket packetReceiver =
             new DatagramPacket(receivedBuffer, receivedBuffer.length);
 
     public MembershipService(int portToListen) {
@@ -33,26 +33,26 @@ public class MembershipService {
         }
     }
 
-    public List<GossipNode> receiveGossip() {
-        List<GossipNode> message = null;
+    public List<GossipNode> gossipReceiver() {
+        List<GossipNode> gossip_message = null;
         try {
-            datagramSocket.receive(receivePacket);
+            datagramSocket.receive(packetReceiver);
 
             try (ObjectInputStream objectInputStream = new ObjectInputStream(
-                    new ByteArrayInputStream(receivePacket.getData()))) {
+                    new ByteArrayInputStream(packetReceiver.getData()))) {
 
-                message = (List<GossipNode>) objectInputStream.readObject();
-                log.info("Received a gossip message "+message);
+                gossip_message = (List<GossipNode>) objectInputStream.readObject();
+                log.info("A gossip message was received "+gossip_message);
 
-            } catch (ClassNotFoundException e) {
-                log.error("Error in receiving message", e);
+            } catch (ClassNotFoundException k) {
+                log.error("An error has occured while receiving message", k);
             }
 
-        } catch (IOException e) {
-            log.error("Unable to receive message", e);
+        } catch (IOException k) {
+            log.error("The message was not received", k);
         }
 
-        return message;
+        return gossip_message;
     }
 
     public void sendGossip(List<GossipNode> memberList, InetSocketAddress receiver) {

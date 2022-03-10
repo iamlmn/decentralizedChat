@@ -57,10 +57,10 @@ public class NodeGossiper {
      */
     public void start() {
         startSenderThread();
-        startReceiverThread();
+        receiverController();
         startFailureDetectionThread();
         startChatSender();
-        startChatReceiver();
+        chatReceiverService();
         startReplicationThread();
         //getMemberInfo();
     }
@@ -196,31 +196,31 @@ public class NodeGossiper {
         }).start();
     }
 
-    public void startChatReceiver() {
+    public void chatReceiverService() {
         (new Thread() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         //Accepting Request
-                        final Socket s = commChannel.getServerSocket().accept();
-                        ChatMessage message = commChannel.receiveMessage(s);
+                        final Socket m = commChannel.getServerSocket().accept();
+                        ChatMessage chat = commChannel.receiveMessage(m);
                                 String mergingData = "True";
-                                //Merging chatStorage if message contains DBinfo
-                                if (message.containsDBinfo() ) {
-                                    mergeDBInfo(message);
+                                //if message contains DBinfo then merge the chatstorage
+                                if (chat.containsDBinfo() ) {
+                                    mergeDBInfo(chat);
                                 } else {
-                                    String req = (String) message.getMessage();
-                                    if (req.equals("pullInfo")) {
-                                        sendDBInfo(message);
+                                    String ask = (String) chat.getMessage();
+                                    if (ask.equals("pullInfo")) {
+                                        sendDBInfo(chat);
                                     } else {
-                                        // Create a new thread for each recieve message and applying exponential backoff to control network congestion
-                                        runExponentialBackOff(message);
+                                        // for each message received a new thread would be created and to control network congestion exponential backoff would be implemented
+                                        runExponentialBackOff(chat);
                                     }
                                 }
                             
-                    } catch (IOException ex) {
-                        log.error(ex);
+                    } catch (IOException k) {
+                        log.error(k);
                     }
 
                 }
@@ -229,31 +229,31 @@ public class NodeGossiper {
     }
     
     //stops gossiping same message after its probability decreases by 1/64
-    private void runExponentialBackOff(ChatMessage<String> message) {
+    private void runExponentialBackOff(ChatMessage<String> chat) {
         (new Thread() {
             @Override
             public synchronized void run() {
                 try {
-                    if (uid.containsKey(message.getUUID())) {
-                        float probability = uid.get(message.getUUID());
+                    if (uid.containsKey(chat.getUUID())) {
+                        float probability = uid.get(chat.getUUID());
                         probability /= 2;
                         if (probability >= (1 / 64f)) {
-                            uid.replace(message.getUUID(), probability);
+                            uid.replace(chat.getUUID(), probability);
                             Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
-                            log.info("Forwarding Message: "+ message.getMessage() +" Probability changed to "+probability);
-                            gossipChatMessage(message);
+                            log.info("Forwarding Message: "+ chat.getMessage() +" Probability changed to "+probability);
+                            gossipChatMessage(chat);
                         }
 
                     } else {
-                        uid.put(message.getUUID(), 1.00f);
-                        chatStorage.add(message);
-                        System.out.println("Recieved Message from "+message.getSender().getPort()+": "+message.getMessage());
+                        uid.put(chat.getUUID(), 1.00f);
+                        chatStorage.add(chat);
+                        System.out.println("Recieved Message from "+chat.getSender().getPort()+": "+chat.getMessage());
                         Thread.sleep(gossipProperty.getUpdateFrequency().toMillis());
-                        gossipChatMessage(message);
+                        gossipChatMessage(chat);
                     }
 
-                } catch (InterruptedException ex) {
-                    log.error("Error:"+ex);
+                } catch (InterruptedException k) {
+                    log.error("Error:"+k);
                 }
             }
         }).start();
@@ -307,41 +307,41 @@ public class NodeGossiper {
         return clusterNodes.subList(0, numberOfPeers);
     }
 
-    private void startReceiverThread() {
+    private void receiverController() {
         new Thread(() -> {
             while (!stopped) {
-                receiveGossipMessage();
+                gossipMessageReceiver();
             }
         }).start();
     }
 
-    //Receive gossip message
-    private void receiveGossipMessage() {
-        List<GossipNode> receivedList = gossipNodeConnector.receiveGossip();
+    //function to receive the gossip messages
+    private void gossipMessageReceiver() {
+        List<GossipNode> receivedMembers = gossipNodeConnector.gossipReceiver();
         synchronized (clusterInfo) {
-            updateMembers(receivedList);
+            updateMembers(receivedMembers);
         }
     }
 
-    //Update the Current Members with new Nodes
-    public void updateMembers(List<GossipNode> receivedList) {
-        for (GossipNode member : receivedList) {
-            String id = member.getUniqueId();
+    //a function that updates the current members with new nodes
+    public void updateMembers(List<GossipNode> receivedMembers) {
+        for (GossipNode nodes : receivedMembers) {
+            String id = nodes.getUniqueId();
             synchronized(clusterInfo){
             if (!clusterInfo.containsKey(id)) {
-                clusterInfo.put(id, member);
+                clusterInfo.put(id, nodes);
                 //member.setConfig(gossipProperty);
                 //member.setLastUpdatedTime();
-                if(member.getStatus() == 1 ){
-                System.out.println("Node Online: "+member.getPort());
+                if(nodes.getStatus() == 1 ){
+                System.out.println("Node currently Online: "+nodes.getPort());
                 }
-                clusterInfo.putIfAbsent(member.getUniqueId(), member);
-                for (Map.Entry<String, GossipNode> n : member.getKnownNodes().entrySet()) {
+                clusterInfo.putIfAbsent(nodes.getUniqueId(), nodes);
+                for (Map.Entry<String, GossipNode> n : nodes.getKnownNodes().entrySet()) {
                     clusterInfo.putIfAbsent(n.getKey(), n.getValue());
                 }
             } else {
-                GossipNode existingMemberRecord = clusterInfo.get(id);
-                existingMemberRecord.update(member);
+                GossipNode currentMemberRecord = clusterInfo.get(id);
+                currentMemberRecord.update(nodes);
             }
         }
         }
