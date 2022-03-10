@@ -17,4 +17,5 @@ Run the below command to start the application, this opens the Initial Node.
 
 Run the below command to start the other nodes.
 > java  -jar .\GroupChat.jar 'Provide-your-IPAddress' 8081 'Provide-your-IPAddress' 8080
+
 > java  -jar .\GroupChat.jar  'Provide-your-IPAddress' 8082 'Provide-your-IPAddress' 8081
