@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.scu.edu.gossip</groupId>
+  <groupId>org.gossip</groupId>
   <artifactId>coen317_Gossip_v1</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -71,7 +71,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/target/GossipProtoApp</outputDirectory>
+              <outputDirectory>${basedir}/target/GroupChat</outputDirectory>
               <resources>
                 <resource>
                   <directory>resources</directory>
@@ -93,7 +93,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/GossipProtoApp/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/GroupChat/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>false</overWriteSnapshots>
               <overWriteIfNewer>true</overWriteIfNewer>
@@ -109,14 +109,14 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>org.scu.edu.gossip.GossipProtoApp</mainClass>
+              <mainClass>org.gossip.GroupChat</mainClass>
             </manifest>
             <manifestEntries>
               <Class-Path>.</Class-Path>
             </manifestEntries>
           </archive>
 
-          <finalName>GossipProtoApp/GossipProtoApp</finalName>
+          <finalName>GroupChat/GroupChat</finalName>
         </configuration>
       </plugin>
     </plugins>
