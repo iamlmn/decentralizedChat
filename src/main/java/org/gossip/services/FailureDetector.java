@@ -21,13 +21,13 @@ public class FailureDetector {
 
     // constrcutor
     private static final Logger log = Logger.getLogger(FailureDetector.class);
-    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
+
 
     /*******************************************
      *      Failure detection methods          *
      *******************************************/
 
-    ////Detect the failed node
+    // Detect the failed node
     public void detect(ConcurrentHashMap<String, GossipNode> memberInfo, GossipProperty gossipProperty ) {
         LocalDateTime currentTimestamp = LocalDateTime.now();
         for (String member : memberInfo.keySet()) {
@@ -37,13 +37,13 @@ public class FailureDetector {
                 if (currentTimestamp.isAfter(failureDetectionTime)) {
                     node.setStatus(GossipNodeStatus.NODE_SUSPECT_DEAD);
                     System.out.println("Node " + RandomNameGenerator.getUserName(memberInfo.get(member).getPort()) + '(' + memberInfo.get(member).getPort() +  ") is Offline");
-                    log.info("Detected a failed Node - "+ memberInfo.get(member));
+                    log.info("Suspecting a failed Node - "+ memberInfo.get(member));
                 }
             }
         }
     }
 
-    //Removing nodes that are failed
+    // Removing failed nodes that are suspected dead.
     public void remove(ConcurrentHashMap<String, GossipNode> memberInfo, GossipProperty gossipProperty) {
         LocalDateTime currentTimeStamp = LocalDateTime.now();
         for (String member : memberInfo.keySet()) {
@@ -51,7 +51,7 @@ public class FailureDetector {
             if (node.getStatus() == 3) {
                 LocalDateTime failureDetectionTime = node.timestamp.plus(gossipProperty.getFailureTimeout());
                 if (currentTimeStamp.isAfter(failureDetectionTime)) {
-                    log.info("Removing node - {} " + memberInfo.get(member));
+                    log.info("Detected a failed node - Removing " + memberInfo.get(member));
                     memberInfo.remove(member); // remove Failed members
                 }
 

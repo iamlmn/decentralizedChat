@@ -24,8 +24,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MembershipService {
     private static final Logger log = Logger.getLogger(MembershipService.class);
-            //LoggerFactory.getLogger(GossipNodeConnector.class);
-
     private DatagramSocket datagramSocket;
     private GossipUtils utils = new GossipUtils();
     private final byte[] receivedBuffer = new byte[8192];
@@ -41,7 +39,7 @@ public class MembershipService {
     }
 
 
-    // Gossip the membership list to the peers
+    // Gossip the members information to the some peers
     public void sendGossipMessage(ConcurrentHashMap<String, GossipNode> memberInfo, GossipNode gossipNode, GossipProperty gossipProperty) {
         gossipNode.incrementHeartbeat();
         List<String> randomMemberNodeIds = utils.getRandomNodes(memberInfo, gossipNode, gossipProperty.getPeerCount());
@@ -110,11 +108,11 @@ public class MembershipService {
 
         }
         try {
-            log.info("Sending gossip message to [" + target.toString() + "]");
+            log.info("Gossiping message to [" + target.toString() + "]");
             datagramSocket.send(packet);
         } catch (IOException e) {
 
-            log.error("Fatal error trying to send: "
+            log.error("Fatal error while to send: "
                     + packet + " to [" + target.toString() + "]");
 
         }
