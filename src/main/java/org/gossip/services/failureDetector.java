@@ -37,7 +37,7 @@ public class FailureDetector {
                 if (currentTimestamp.isAfter(failureDetectionTime)) {
                     node.setStatus(GossipNodeStatus.NODE_SUSPECT_DEAD);
                     System.out.println("Node " + RandomNameGenerator.getUserName(memberInfo.get(member).getPort()) + '(' + memberInfo.get(member).getPort() +  ") is Offline");
-                    log.info("Detected a failed Node - "+ memberInfo.get(member));
+                    log.info("Suspecting a failed Node - "+ memberInfo.get(member));
                 }
             }
         }
@@ -51,7 +51,7 @@ public class FailureDetector {
             if (node.getStatus() == 3) {
                 LocalDateTime failureDetectionTime = node.timestamp.plus(gossipProperty.getFailureTimeout());
                 if (currentTimeStamp.isAfter(failureDetectionTime)) {
-                    log.info("Removing node - {} " + memberInfo.get(member));
+                    log.info("Detected a failed node - Removing " + memberInfo.get(member));
                     memberInfo.remove(member); // remove Failed members
                 }
 
