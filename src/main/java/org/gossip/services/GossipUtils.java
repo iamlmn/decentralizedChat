@@ -23,14 +23,14 @@ public class GossipUtils {
     private static final Logger log = Logger.getLogger(GossipUtils.class);
 
     private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
-    // fetch random nodes from the cluster
+    // get random nodes from the cluster
     public List<String> getRandomNodes(ConcurrentHashMap<String, GossipNode> memberInfo, GossipNode gossipNode, int numberOfPeers) {
         List<String> clusterNodes = new ArrayList<>(memberInfo.keySet());
 
-        //Remove self from peer list
+        //Remove itself from member list
         clusterNodes.remove(gossipNode.getUniqueId());
 
-        //No Random nodes are picked if cluster size is less than peer count
+        // No Random nodes are picked if cluster size is less than peer count
         if (clusterNodes.size() <= numberOfPeers) {
             return clusterNodes;
         }
@@ -39,7 +39,7 @@ public class GossipUtils {
     }
 
 
-    // a function that updates the current members with new nodes
+    // a method to update current members with new information
     public void updateMembers(List<GossipNode> receivedNodeList, ConcurrentHashMap<String, GossipNode> memberInfo) {
         for (GossipNode node : receivedNodeList) {
             String id = node.getUniqueId();
@@ -61,7 +61,7 @@ public class GossipUtils {
         }
     }
 
-    //Merges chatRepository with recieved chatRepository
+    // Merges chatRepository with recieved chatRepository
     public void updateChatRepository(ChatMessage<List<ChatMessage>> messageReceived, ConcurrentHashMap<String, Float> messageIndentifier, List<ChatMessage> chatRepository) {
        (new Thread() {
             @Override
@@ -86,26 +86,5 @@ public class GossipUtils {
         }).start();
     }
 
-
-    // public void stop() {
-    //     isStopped = true;
-    // }
-
-    // public void getMemberInfo(memberInfo, gossipNode) {
-
-    //     new Thread(() ->
-    //     {
-    //         try {
-    //             Thread.sleep(30);
-    //         } catch (InterruptedException e) {
-    //             log.error("Unable to get member info", e);
-    //         }
-    //         synchronized (memberInfo) {
-    //             log.info("List of hosts");
-    //             memberInfo.values().forEach(node ->
-    //                     log.info( gossipNode.getUniqueId()+" -> "+node.status));
-    //         }
-    //     }).start();
-    // }
 
 }

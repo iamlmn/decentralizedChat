@@ -21,9 +21,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NodeGossiper {
 
     private static final Logger log = Logger.getLogger(NodeGossiper.class);
-    
-            //LoggerFactory.getLogger(NodeGossiper.class);
-
     private final GossipNode gossipNode;
     private final GossipProperty gossipProperty;
     private final ConcurrentHashMap<String, GossipNode> memberInfo; //stores all node which are online
@@ -34,7 +31,6 @@ public class NodeGossiper {
     private List<ChatMessage> chatRepository = new ArrayList<>();
     private FailureDetector failureDetector = new FailureDetector();
     private GossipUtils utils = new GossipUtils();
-    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
     Thread sender;
 
@@ -62,12 +58,12 @@ public class NodeGossiper {
      *          Start node gossip process      *
      *******************************************/
     public void startGossip() {
-        initiateSenderThread();
-        initiateReceiverThread();
-        initiateFailureDetectionThread();
-        initiateChatSenderThread();
-        initiateChatReceiverThread();
-        initiateReplicationThread();
+        initiateSenderService();
+        initiateReceiverService();
+        initiateFailureDetectionService();
+        initiateChatSenderService();
+        initiateChatReceiverService();
+        initiateReplicationService();
     }
 
 
@@ -75,7 +71,7 @@ public class NodeGossiper {
      *    1.  Start Sending process methods    *
      *******************************************/
 
-    private void initiateSenderThread() {
+    private void initiateSenderService() {
         sender = new Thread(() -> {
             while (!isStopped) {
                 membersConnector.sendGossipMessage(memberInfo, gossipNode,  gossipProperty);
@@ -93,7 +89,7 @@ public class NodeGossiper {
      *     2. Start recieving helper methods    *
      *******************************************/
 
-    private void initiateReceiverThread() {
+    private void initiateReceiverService() {
         new Thread(() -> {
             while (!isStopped) {
                 //Receive gossip message
@@ -111,7 +107,7 @@ public class NodeGossiper {
      *     3.  Failure detection methods          *
      *******************************************/
     // Starts detecting node failures
-    private void initiateFailureDetectionThread() {
+    private void initiateFailureDetectionService() {
         new Thread(() -> {
             while (!isStopped) {
                 failureDetector.detect(memberInfo, gossipProperty);
@@ -132,7 +128,7 @@ public class NodeGossiper {
      *******************************************/
 
       //Chat message service
-    public void initiateChatSenderThread() {
+    public void initiateChatSenderService() {
         (new Thread() {
             @Override
             public void run() {
@@ -146,7 +142,7 @@ public class NodeGossiper {
      *   5.Start recieving Chat Message  helper *
      *******************************************/
 
-    public void initiateChatReceiverThread() {
+    public void initiateChatReceiverService() {
         (new Thread() {
             @Override
             public void run() {
@@ -220,7 +216,7 @@ public class NodeGossiper {
      *******************************************/
      
     //Message Sync between nodes
-    public void initiateReplicationThread() {
+    public void initiateReplicationService() {
         (new Thread() {
             @Override
             public void run() {

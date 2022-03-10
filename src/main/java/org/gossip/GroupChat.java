@@ -16,14 +16,11 @@ import java.time.Duration;
 public class GroupChat {
 
     private static final Logger log = Logger.getLogger(GroupChat.class);
-    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
 
-    //Configuring Logger for creating log files
+    // Configuring Logger for creating log files
     public static void initLogger(String hostname, int port) {
         Logger rootLoggerHanlder = Logger.getRootLogger();
         rootLoggerHanlder.setLevel(Level.ALL);
-        // String uname = "";
-        // uname = 
 
         //Define log pattern layout
         PatternLayout patternLayout = new PatternLayout("%d{ISO8601} [%t] %-5p %c %x - %m%n");
@@ -42,10 +39,10 @@ public class GroupChat {
 
     public static void main(String[] args) {
 
-        //initialNodeBoolean is used for starting initial communication
+        // initialNodeBoolean is used for starting initial communication
         boolean initialNodeBoolean = true;
         
-        //NodeGossiper handles maintaining membership, failure detection, sending/recieving chat messages
+        // NodeGossiper handles maintaining membership, failure detection, sending/recieving chat messages
         NodeGossiper initialNodeGossiper;
         
         if (args.length < 2) {

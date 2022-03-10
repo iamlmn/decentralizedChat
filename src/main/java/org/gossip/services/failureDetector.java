@@ -21,13 +21,13 @@ public class FailureDetector {
 
     // constrcutor
     private static final Logger log = Logger.getLogger(FailureDetector.class);
-    // private final RandomNameGenerator randomNameGenerator = new RandomNameGenerator();
+
 
     /*******************************************
      *      Failure detection methods          *
      *******************************************/
 
-    ////Detect the failed node
+    // Detect the failed node
     public void detect(ConcurrentHashMap<String, GossipNode> memberInfo, GossipProperty gossipProperty ) {
         LocalDateTime currentTimestamp = LocalDateTime.now();
         for (String member : memberInfo.keySet()) {
@@ -43,7 +43,7 @@ public class FailureDetector {
         }
     }
 
-    //Removing nodes that are failed
+    // Removing failed nodes that are suspected dead.
     public void remove(ConcurrentHashMap<String, GossipNode> memberInfo, GossipProperty gossipProperty) {
         LocalDateTime currentTimeStamp = LocalDateTime.now();
         for (String member : memberInfo.keySet()) {
